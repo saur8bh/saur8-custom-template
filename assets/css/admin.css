@@ -515,8 +515,7 @@ body {
   margin-right: 0;
 }
 
-.saur8-input,
-.saur8-select {
+.saur8-input {
   width: 100%;
   max-width: 100%;
   padding: 14px 18px;
@@ -530,12 +529,57 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.saur8-input:focus,
-.saur8-select:focus {
+.saur8-input:focus {
   outline: none;
   border-color: var(--saur8-accent);
   background: rgba(167, 139, 250, 0.05);
   box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1), 0 0 20px rgba(167, 139, 250, 0.2);
+}
+
+/* Comprehensive Dark Mode Selects for WordPress Admin */
+.saur8-wrap select,
+.saur8-wrap select.saur8-select,
+.saur8-select,
+#saur8-bulk-action {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  color-scheme: dark !important;
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 38px 12px 16px !important;
+  background-color: #13131f !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23a78bfa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 16px 16px !important;
+  border: 1px solid var(--saur8-border-glow) !important;
+  border-radius: var(--saur8-radius-sm) !important;
+  color: #f8fafc !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  transition: var(--saur8-transition) !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.saur8-wrap select:focus,
+.saur8-wrap select.saur8-select:focus,
+.saur8-select:focus,
+#saur8-bulk-action:focus {
+  outline: none !important;
+  border-color: var(--saur8-accent) !important;
+  background-color: #1a1a2e !important;
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2), 0 0 15px rgba(167, 139, 250, 0.25) !important;
+}
+
+.saur8-wrap select option,
+.saur8-select option,
+#saur8-bulk-action option {
+  background-color: #13131f !important;
+  color: #f8fafc !important;
+  padding: 10px 14px !important;
 }
 
 .saur8-form-group {
@@ -881,7 +925,6 @@ code {
   border-color: var(--saur8-accent);
 }
 
-.saur8-checkbox,
 .saur8-radio {
   width: 20px;
   height: 20px;
@@ -1026,4 +1069,483 @@ code {
 
 .saur8-btn--ghost .saur8-icon-inline {
   fill: var(--saur8-text);
+}
+
+
+/* -------------------------------------------------------------------------
+ * AJAX Toolbar, Bulk Actions & Selectors
+ * ------------------------------------------------------------------------- */
+
+.saur8-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--saur8-card) 0%, var(--saur8-bg-secondary) 100%);
+  border: 1px solid var(--saur8-border-glow);
+  border-radius: var(--saur8-radius-sm);
+  box-shadow: var(--saur8-shadow);
+}
+
+.saur8-toolbar__left,
+.saur8-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.saur8-bulk-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.saur8-wrap select.saur8-select--inline,
+.saur8-select--inline,
+#saur8-bulk-action {
+  width: auto !important;
+  min-width: 190px !important;
+  height: 38px !important;
+  line-height: 36px !important;
+  padding: 0 34px 0 14px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  vertical-align: middle !important;
+  background-position: right 10px center !important;
+}
+
+.saur8-bulk-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--saur8-glow-bright);
+  transition: var(--saur8-transition);
+}
+
+.saur8-table__checkbox,
+.saur8-td-checkbox {
+  width: 44px;
+  text-align: center;
+  padding: 16px 12px;
+}
+
+.saur8-table th.saur8-table__checkbox input,
+.saur8-table td.saur8-table__checkbox input {
+  margin: 0 auto;
+  display: block;
+}
+
+/* Custom Checkbox - Suppress WordPress core Dashicons ::before checkmark to prevent double check */
+.saur8-wrap input[type="checkbox"].saur8-checkbox,
+.saur8-checkbox {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  border: 1.5px solid var(--saur8-border-glow) !important;
+  border-radius: 5px !important;
+  background: #13131f !important;
+  cursor: pointer !important;
+  position: relative !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: var(--saur8-transition) !important;
+  flex-shrink: 0 !important;
+}
+
+/* Strictly kill WordPress Dashicons checkmark icon */
+.saur8-wrap input[type="checkbox"].saur8-checkbox::before,
+.saur8-wrap input[type="checkbox"]::before,
+.saur8-checkbox::before {
+  content: none !important;
+  display: none !important;
+  speak: never !important;
+}
+
+.saur8-checkbox-label .saur8-checkbox {
+  margin-top: 3px !important;
+}
+
+.saur8-wrap input[type="checkbox"].saur8-checkbox:hover,
+.saur8-checkbox:hover {
+  border-color: var(--saur8-accent) !important;
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.25) !important;
+}
+
+.saur8-wrap input[type="checkbox"].saur8-checkbox:checked,
+.saur8-checkbox:checked {
+  background: linear-gradient(135deg, var(--saur8-accent), var(--saur8-glow)) !important;
+  border-color: var(--saur8-glow) !important;
+}
+
+/* Single clean rotated border tick */
+.saur8-wrap input[type="checkbox"].saur8-checkbox:checked::after,
+.saur8-checkbox:checked::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 5px !important;
+  top: 1px !important;
+  width: 5px !important;
+  height: 10px !important;
+  border: solid #ffffff !important;
+  border-width: 0 2px 2px 0 !important;
+  transform: rotate(45deg) !important;
+  display: block !important;
+}
+
+.saur8-wrap input[type="checkbox"].saur8-checkbox:indeterminate,
+.saur8-checkbox:indeterminate {
+  background: var(--saur8-accent) !important;
+  border-color: var(--saur8-glow) !important;
+}
+
+.saur8-wrap input[type="checkbox"].saur8-checkbox:indeterminate::after,
+.saur8-checkbox:indeterminate::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 4px !important;
+  top: 7px !important;
+  width: 8px !important;
+  height: 2px !important;
+  background: #ffffff !important;
+  border: none !important;
+  transform: none !important;
+  display: block !important;
+}
+
+/* Row states */
+.saur8-table tbody tr.saur8-row-selected {
+  background: rgba(124, 92, 191, 0.08);
+  border-left: 3px solid var(--saur8-accent);
+}
+
+.saur8-table tbody tr.saur8-row-highlight {
+  animation: flash-highlight 2s ease-out;
+}
+
+@keyframes flash-highlight {
+  0% {
+    background: rgba(16, 185, 129, 0.25);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Button Loading States & Spinners
+ * ------------------------------------------------------------------------- */
+
+.saur8-btn--loading {
+  pointer-events: none;
+  opacity: 0.75;
+  position: relative;
+}
+
+.saur8-spin {
+  animation: saur8-spinner-rotation 0.8s linear infinite;
+}
+
+@keyframes saur8-spinner-rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.saur8-btn--xs {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
+/* -------------------------------------------------------------------------
+ * Toast & Inline AJAX Notifications
+ * ------------------------------------------------------------------------- */
+
+.saur8-toast-container {
+  position: fixed;
+  top: 48px;
+  right: 24px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  pointer-events: none;
+}
+
+.saur8-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 20px;
+  background: rgba(19, 19, 31, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--saur8-border-glow);
+  border-radius: var(--saur8-radius-sm);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--saur8-glow-shadow);
+  color: var(--saur8-text);
+  font-size: 13.5px;
+  animation: toast-slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.saur8-toast--success {
+  border-left: 4px solid var(--saur8-success);
+}
+
+.saur8-toast--error {
+  border-left: 4px solid var(--saur8-danger);
+}
+
+.saur8-toast--warning {
+  border-left: 4px solid var(--saur8-warning);
+}
+
+.saur8-toast__close {
+  background: none;
+  border: none;
+  color: var(--saur8-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+  line-height: 1;
+  transition: var(--saur8-transition);
+}
+
+.saur8-toast__close:hover {
+  color: var(--saur8-text);
+}
+
+/* -------------------------------------------------------------------------
+ * Import / Export View Styles
+ * ------------------------------------------------------------------------- */
+
+.saur8-export-all-box {
+  margin: 20px 0;
+}
+
+.saur8-divider-title {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--saur8-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 24px 0 16px 0;
+}
+
+.saur8-divider-title::before,
+.saur8-divider-title::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--saur8-border);
+}
+
+.saur8-divider-title span {
+  padding: 0 12px;
+}
+
+.saur8-checklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--saur8-border);
+  border-bottom: none;
+  border-radius: var(--saur8-radius-sm) var(--saur8-radius-sm) 0 0;
+}
+
+.saur8-checklist-container {
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid var(--saur8-border);
+  border-radius: 0 0 var(--saur8-radius-sm) var(--saur8-radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.saur8-checklist-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.saur8-checklist-container::-webkit-scrollbar-thumb {
+  background: var(--saur8-border-glow);
+  border-radius: 4px;
+}
+
+.saur8-checklist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: var(--saur8-transition);
+}
+
+.saur8-checklist-item:last-child {
+  border-bottom: none;
+}
+
+.saur8-checklist-item:hover {
+  background: rgba(167, 139, 250, 0.05);
+}
+
+.saur8-checklist-item .saur8-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.saur8-checklist-item .saur8-checkbox-text small code {
+  color: var(--saur8-glow);
+  background: rgba(167, 139, 250, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+/* Drag & Drop Dropzone */
+.saur8-dropzone {
+  position: relative;
+  border: 2px dashed var(--saur8-border-glow);
+  border-radius: var(--saur8-radius);
+  padding: 40px 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.015);
+  cursor: pointer;
+  transition: var(--saur8-transition);
+  margin-top: 16px;
+}
+
+.saur8-dropzone:hover,
+.saur8-dropzone--active {
+  border-color: var(--saur8-glow);
+  background: rgba(167, 139, 250, 0.05);
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.15);
+}
+
+.saur8-dropzone__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.saur8-dropzone__icon {
+  margin-bottom: 16px;
+  color: var(--saur8-glow);
+}
+
+.saur8-dropzone__icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.saur8-dropzone__text {
+  color: var(--saur8-text);
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+
+.saur8-dropzone__hint {
+  color: var(--saur8-muted);
+  font-size: 13px;
+}
+
+.saur8-dropzone__file-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: var(--saur8-card);
+  border: 1px solid var(--saur8-accent);
+  border-radius: 30px;
+  box-shadow: var(--saur8-glow-shadow);
+  margin-top: 10px;
+  z-index: 10;
+  position: relative;
+}
+
+.saur8-dropzone__filename {
+  font-weight: 600;
+  color: var(--saur8-glow-bright);
+}
+
+.saur8-dropzone__remove-file {
+  background: rgba(239, 68, 68, 0.2);
+  border: none;
+  color: var(--saur8-danger-glow);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: var(--saur8-transition);
+}
+
+.saur8-dropzone__remove-file:hover {
+  background: var(--saur8-danger);
+  color: white;
+}
+
+.saur8-code-snippet {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--saur8-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #c4b5fd;
+  font-family: monospace;
+  font-size: 12.5px;
+  margin: 8px 0 0 0;
+  overflow-x: auto;
+}
+
+.saur8-empty-state__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }

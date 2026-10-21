@@ -2,7 +2,7 @@
 /**
  * Plugin Name: saur8 custom template
  * Description: Create, edit, and assign custom PHP page templates from the admin. No FTP needed.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Saurabh
  * Text Domain: saur8-custom-template
  * Domain Path: /languages
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'SAUR8_CT_VERSION', '1.0.0' );
+define( 'SAUR8_CT_VERSION', '1.0.1' );
 define( 'SAUR8_CT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SAUR8_CT_URL', plugin_dir_url( __FILE__ ) );
 

@@ -17,6 +17,10 @@ A powerful WordPress plugin that lets you create, edit, and manage custom page t
 - **Two-way sync** between template name and code
 
 ### 🚀 Template Management
+- **Seamless AJAX Operations** - Delete, duplicate, and assign templates with zero page reload
+- **Bulk Selection & Actions** - Select multiple templates for instant bulk deletion or ZIP export
+- **Import & Export Tab** - Drag & drop single `.php` templates or `.zip` archives with automatic header parsing
+- **Export Options** - Export all templates as a ZIP archive, selected templates, or individual `.php` files
 - **Create unlimited templates** from scratch or duplicate existing ones
 - **Edit templates** with a powerful code editor
 - **Delete templates** with automatic cleanup
@@ -40,7 +44,7 @@ A powerful WordPress plugin that lets you create, edit, and manage custom page t
 - **Futuristic dark UI** with glowing effects and animations
 - **Responsive design** works on all devices
 - **Intuitive navigation** with tabbed interface
-- **Real-time feedback** with success/error notifications
+- **Real-time feedback** with floating toast notices and button loading states
 - **SVG icons** for crisp visuals
 
 ## 📦 Installation
@@ -75,26 +79,18 @@ git clone https://github.com/yourusername/saur8-custom-template.git
 4. Optionally assign it to a page immediately
 5. Click **Save Template**
 
-### Assigning Templates to Pages
+### Managing Templates via AJAX
 
-**Method 1: During Creation/Edit**
-- Use the "Assign After Saving" dropdown in the editor sidebar
+- **Delete**: Click the 🗑️ **Delete** button to remove a template immediately with no page refresh.
+- **Duplicate**: Click 📋 **Duplicate** to create a clone and insert it into the list dynamically.
+- **Front Page**: Click ⭐ **Front Page** to assign a template to your static homepage instantly.
+- **Bulk Actions**: Check the select box on multiple templates to delete or export as a ZIP archive at once.
 
-**Method 2: Page Assignments Tab**
-- Go to **Template Studio → Page Assignments**
-- Use auto-detect for homepage or manual assignment
-- Select page and template, click Assign
+### Importing & Exporting Templates
 
-**Method 3: Quick Front Page Apply**
-- Go to **Template Studio → All Templates**
-- Click the ⭐ **Front Page** button on any template
-
-### Setting Your Front Page
-
-1. Go to **Template Studio → Front Page Settings**
-2. Select your homepage from the dropdown
-3. Optionally select a posts page
-4. Click **Save Settings**
+1. Go to **Template Studio → Import / Export**
+2. **To Export**: Click "Export All Templates as ZIP", or pick specific templates from the checklist.
+3. **To Import**: Drag and drop a `.php` file or `.zip` archive into the dropzone, then click "Import Template(s)".
 
 ## 🛠️ Development
 
@@ -105,101 +101,42 @@ saur8-custom-template/
 ├── saur8-custom-template.php    # Main plugin file
 ├── uninstall.php                # Cleanup on deletion
 ├── includes/
-│   ├── class-plugin.php         # Core plugin class
-│   ├── class-template-manager.php
+│   ├── class-plugin.php         # Core plugin class & script localization
+│   ├── class-template-manager.php # Template CRUD, ZIP packaging, & import/export
 │   ├── class-template-loader.php
 │   ├── class-page-assignment.php
 │   └── class-front-page.php
 ├── admin/
-│   ├── class-admin-menu.php
+│   ├── class-admin-menu.php     # Menu registration, POST & AJAX handlers
 │   ├── class-admin-notices.php
 │   ├── includes/
 │   │   └── icons.php            # SVG icon system
 │   └── views/
-│       ├── layout.php
-│       ├── page-all-templates.php
+│       ├── layout.php           # Header & tabbed navigation
+│       ├── page-all-templates.php # AJAX-powered template table & bulk actions
 │       ├── page-create-template.php
 │       ├── page-edit-template.php
+│       ├── page-import-export.php # Drag-and-drop import & ZIP export
 │       ├── page-assignment.php
 │       ├── page-front-page.php
 │       └── page-settings.php
 ├── assets/
 │   ├── css/
-│   │   └── admin.css            # Futuristic dark theme
+│   │   └── admin.css            # Futuristic dark theme, toolbar & toasts
 │   └── js/
-│       └── admin.js             # CodeMirror & UI logic
+│       └── admin.js             # CodeMirror, AJAX handlers & bulk actions
 └── languages/
     └── saur8-custom-template.pot
 ```
 
-### Development Mode
-
-Enable development mode for automatic cache busting:
-
-1. Go to **Template Studio → Settings**
-2. Check **Enable Development Mode**
-3. Select **File Modification Time** cache strategy
-4. Click **Save Settings**
-
-When dev mode is enabled, CSS/JS files use file modification timestamps, so changes appear immediately without clearing cache.
-
-### Cache Busting Strategies
-
-- **Plugin Version** - Stable version number (recommended for production)
-- **File Modification Time** - Auto cache-bust on file changes (for development)
-- **Current Timestamp** - Always fresh (not recommended - impacts performance)
-
-## 🎨 Customization
-
-### Template Boilerplate
-
-Every template starts with this structure:
-
-```php
-<?php
-/**
- * Template Name: My Custom Template
- */
-
-get_header();
-?>
-
-<main id="main-content">
-  <!-- Your custom HTML/PHP here -->
-</main>
-
-<?php
-get_footer();
-?>
-```
-
-### Accessing WordPress Functions
-
-Templates have full access to WordPress functions:
-
-```php
-// Get current post
-global $post;
-
-// Display post content
-the_content();
-
-// Custom query
-$args = array('post_type' => 'page');
-$query = new WP_Query($args);
-
-// Get custom fields
-$value = get_post_meta($post->ID, 'custom_field', true);
-```
-
 ## 🔒 Security
 
-- **Nonce verification** on all forms
-- **Capability checks** (`manage_options` required)
-- **Input sanitization** on all user inputs
-- **Output escaping** for all dynamic content
-- **Path traversal protection** for file operations
-- **SQL injection prevention** with prepared statements
+- **Nonce verification** on all forms and AJAX requests (`saur8_ajax_nonce`, `check_ajax_referer`)
+- **Capability checks** (`manage_options` required for all operations)
+- **Input sanitization** on all file names and user inputs (`sanitize_file_name`)
+- **Output escaping** for all dynamic content (`esc_html`, `esc_attr`, `esc_url`)
+- **Path traversal protection** (`realpath` and boundary checks against `SAUR8_CT_TEMPLATES_DIR`)
+- **SQL injection prevention** with `$wpdb->prepare()`
 
 ## 🌐 Translation Ready
 
@@ -214,74 +151,9 @@ The plugin is fully translation-ready with:
 - PHP 7.4 or higher
 - Modern browser with JavaScript enabled
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 Changelog
-
-### Version 1.0.0
-- Initial release
-- Template creation and editing with CodeMirror
-- Page assignment system
-- Front page settings
-- Auto-detect homepage
-- Development mode with cache busting
-- Futuristic dark UI with animations
-- SVG icon system
-- Responsive design
-- Translation ready
-
-## 🐛 Bug Reports
-
-If you find a bug, please create an issue on GitHub with:
-- WordPress version
-- PHP version
-- Steps to reproduce
-- Expected behavior
-- Actual behavior
-- Screenshots (if applicable)
-
 ## 📄 License
 
 This plugin is licensed under the GPL v2 or later.
-
-```
-Copyright (C) 2024 Saurabh
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-```
-
-## 👨‍💻 Author
-
-**Saurabh**
-
-## 🙏 Acknowledgments
-
-- CodeMirror for the excellent code editor
-- WordPress community for inspiration
-- All contributors and users
-
-## 📞 Support
-
-For support, please:
-- Open an issue on GitHub
-- Check existing issues for solutions
-- Read the documentation above
 
 ---
 

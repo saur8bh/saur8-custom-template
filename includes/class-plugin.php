@@ -171,6 +171,39 @@ class Saur8_CT_Plugin {
             $js_version,
             true
         );
+
+        // Localize script for AJAX operations
+        wp_localize_script(
+            'saur8-ct-admin',
+            'saur8_ajax',
+            array(
+                'ajax_url'  => admin_url( 'admin-ajax.php' ),
+                'nonce'     => wp_create_nonce( 'saur8_ajax_nonce' ),
+                'admin_url' => admin_url(),
+                'i18n'      => array(
+                    'confirm_delete'          => __( 'Are you sure you want to delete this template? This cannot be undone.', 'saur8-custom-template' ),
+                    'confirm_duplicate'       => __( 'Duplicate this template?', 'saur8-custom-template' ),
+                    'confirm_apply_frontpage' => __( 'Apply this template to %s?', 'saur8-custom-template' ),
+                    'confirm_bulk_delete'     => __( 'Are you sure you want to delete %d selected template(s)? This cannot be undone.', 'saur8-custom-template' ),
+                    'no_templates_selected'   => __( 'Please select at least one template.', 'saur8-custom-template' ),
+                    'please_select_action'    => __( 'Please select a bulk action.', 'saur8-custom-template' ),
+                    'deleting'                => __( 'Deleting...', 'saur8-custom-template' ),
+                    'duplicating'             => __( 'Duplicating...', 'saur8-custom-template' ),
+                    'applying'                => __( 'Applying...', 'saur8-custom-template' ),
+                    'importing'               => __( 'Importing...', 'saur8-custom-template' ),
+                    'exporting'               => __( 'Exporting...', 'saur8-custom-template' ),
+                    'error_generic'           => __( 'An unexpected error occurred. Please try again.', 'saur8-custom-template' ),
+                    'selected_count'          => __( '%d selected', 'saur8-custom-template' ),
+                    'front_page'              => __( 'Front Page', 'saur8-custom-template' ),
+                    'edit'                    => __( 'Edit', 'saur8-custom-template' ),
+                    'duplicate'               => __( 'Duplicate', 'saur8-custom-template' ),
+                    'export'                  => __( 'Export', 'saur8-custom-template' ),
+                    'delete'                  => __( 'Delete', 'saur8-custom-template' ),
+                    'unassigned'              => __( '—', 'saur8-custom-template' ),
+                    'drop_file_here'          => __( 'Drop your .php or .zip template file here', 'saur8-custom-template' ),
+                ),
+            )
+        );
     }
 
     /**

@@ -45,6 +45,10 @@ function saur8_ct_layout_header() {
                class="saur8-tab <?php echo $current_page === 'saur8-ct-frontpage' ? 'saur8-tab--active' : ''; ?>">
                 <?php esc_html_e( 'Front Page Settings', 'saur8-custom-template' ); ?>
             </a>
+            <a href="<?php echo esc_url( admin_url( 'admin.php?page=saur8-ct-import-export' ) ); ?>" 
+               class="saur8-tab <?php echo $current_page === 'saur8-ct-import-export' ? 'saur8-tab--active' : ''; ?>">
+                <?php esc_html_e( 'Import / Export', 'saur8-custom-template' ); ?>
+            </a>
             <a href="<?php echo esc_url( admin_url( 'admin.php?page=saur8-ct-settings' ) ); ?>" 
                class="saur8-tab <?php echo $current_page === 'saur8-ct-settings' ? 'saur8-tab--active' : ''; ?>">
                 <?php esc_html_e( 'Settings', 'saur8-custom-template' ); ?>
