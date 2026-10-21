@@ -98,3 +98,8 @@ composer.lock
 *.css.map
 *.sass.map
 *.scss.map
+
+
+# Local testing templates & configs
+example-template.php
+.vscode/sftp.json
